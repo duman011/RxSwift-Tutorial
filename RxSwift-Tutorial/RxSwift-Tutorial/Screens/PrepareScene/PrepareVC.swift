@@ -8,29 +8,30 @@
 import UIKit
 
 final class PrepareVC: UIViewController {
-    // MARK: - Variables
-    var window: UIWindow?
+  
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("Praper VC Açıldı")
+        checkNetworkConnection()
     }
 }
 
 extension PrepareVC {
     private func checkNetworkConnection() {
         if Reachability.isNetworkAvailable() {
-            //viewModel.viewDidLoad()
+            prepareHomeVC()
         } else {
-            self.showAlert(title: "Hata", message: "Lütfen internet bağlantınızı kontrol ediniz.", buttonTitle: "OK")
+            showAlert(title: "Hata", message: "Lütfen internet bağlantınızı kontrol ediniz.", buttonTitle: "OK")
         }
     }
     
     private func prepareHomeVC() {
-        let vc:HomeVC = .instantiate()
-        let navVC = UINavigationController(rootViewController: vc)
-        self.window?.rootViewController = navVC
-        self.window?.makeKeyAndVisible()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let vc:HomeVC = .instantiate()
+            let navVC = UINavigationController(rootViewController: vc)
+            self.view.window?.rootViewController = navVC
+        }
     }
 }

@@ -9,26 +9,30 @@ import UIKit
 
 
 class BaseVC: UIViewController {
-        
+
     lazy var loadingView: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
-        indicator.center = self.view.center
+        indicator.center = view.center
         indicator.hidesWhenStopped = true
         return indicator
     }()
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(self.loadingView)
+        view.addSubview(loadingView)
     }
     
     func loadingState(_ status: Bool) {
-        switch status {
-        case true:
-            self.loadingView.startAnimating()
-        case false:
-            self.loadingView.stopAnimating()
+        DispatchQueue.main.async {
+            switch status {
+            case true:
+                self.loadingView.startAnimating()
+            case false:
+                self.loadingView.stopAnimating()
+            }
         }
     }
+
 }

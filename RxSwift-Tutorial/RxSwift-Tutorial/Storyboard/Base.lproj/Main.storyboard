@@ -11,7 +11,7 @@
         <!--PrepareVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="PrepareVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PrepareVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" userLabel="PrepareVC" customClass="PrepareVC" customModule="RxSwift_Tutorial" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,6 +22,83 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="55" y="-34"/>
+        </scene>
+        <!--HomeVC-->
+        <scene sceneID="ffK-Tq-AgX">
+            <objects>
+                <viewController storyboardIdentifier="HomeVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DlT-3Q-6Pm" customClass="HomeVC" customModule="RxSwift_Tutorial" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XKu-DJ-Vpo">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PX3-hN-txn">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <subviews>
+                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="y7d-IL-eiV">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="45"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="VJO-0p-Bpv"/>
+                                        </constraints>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="DlT-3Q-6Pm" id="qN4-Zh-eR3"/>
+                                        </connections>
+                                    </searchBar>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hkQ-w1-6fL">
+                                        <rect key="frame" x="0.0" y="45" width="393" height="714"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ZeW-QU-Esf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="PX3-hN-txn" firstAttribute="leading" secondItem="ZeW-QU-Esf" secondAttribute="leading" id="6nF-Cx-1fn"/>
+                            <constraint firstItem="PX3-hN-txn" firstAttribute="top" secondItem="ZeW-QU-Esf" secondAttribute="top" id="D0N-tY-uGs"/>
+                            <constraint firstItem="PX3-hN-txn" firstAttribute="bottom" secondItem="ZeW-QU-Esf" secondAttribute="bottom" id="EIc-FB-Gy0"/>
+                            <constraint firstItem="PX3-hN-txn" firstAttribute="trailing" secondItem="ZeW-QU-Esf" secondAttribute="trailing" id="cRA-E1-amh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="searchBar" destination="y7d-IL-eiV" id="Cyb-2A-BIK"/>
+                        <outlet property="tableView" destination="hkQ-w1-6fL" id="nU5-3M-JJF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dde-pH-yiI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="951.90839694656484" y="-35.211267605633807"/>
+        </scene>
+        <!--MovieDetailVC-->
+        <scene sceneID="uFP-p2-wIn">
+            <objects>
+                <viewController storyboardIdentifier="MovieDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3zN-qa-GA4" userLabel="MovieDetailVC" customClass="MovieDetailVC" customModule="RxSwift_Tutorial" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="j6d-HB-ewF">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wYX-Bb-FvV">
+                                <rect key="frame" x="16" y="227" width="361" height="398"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="398" id="2JS-Xp-YIN"/>
+                                    <constraint firstAttribute="width" constant="361" id="zUK-yg-6Xb"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="4a1-KJ-vYr"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wYX-Bb-FvV" firstAttribute="centerY" secondItem="j6d-HB-ewF" secondAttribute="centerY" id="4rC-Gy-Idw"/>
+                            <constraint firstItem="wYX-Bb-FvV" firstAttribute="centerX" secondItem="j6d-HB-ewF" secondAttribute="centerX" id="NTS-Fm-3Y9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="movieImage" destination="wYX-Bb-FvV" id="5XD-Im-QPh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BDn-ft-Ulq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1809.9236641221373" y="-35.211267605633807"/>
         </scene>
     </scenes>
     <resources>
