@@ -18,8 +18,8 @@ final class HomeVC: BaseVC {
     private let emptyListView: UIEmptyView = UIEmptyView()
     
     //MARK: - IBOutlet
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var tableView: UITableView!
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -27,18 +27,14 @@ final class HomeVC: BaseVC {
 
         initialSetting()
         subscribeIsLoad()
-        subscribeList()
         tableViewItemSelected()
+        subscribeList()
         tableViewBind()
-        searchBarTextDidChange()
-       
     }
     
     // MARK: Register Table View Cell
     private func initialSetting() {
-        tableView.register(UINib(nibName: MovieTableViewCell.identifier,
-                                      bundle: nil),
-                                forCellReuseIdentifier: MovieTableViewCell.identifier)
+        tableView.registerCell(MovieTableViewCell.self)
         tableView.rowHeight = 150
         searchBar.delegate = self
     }
@@ -70,7 +66,6 @@ final class HomeVC: BaseVC {
             }).disposed(by: viewModel.disposeBag)
     }
     
-    
     // MARK: Subscribe Is Load
     /// Yukleme animasyonuna observe olur.
     func subscribeIsLoad() {
@@ -85,7 +80,6 @@ final class HomeVC: BaseVC {
             }.disposed(by: self.viewModel.disposeBag)
     }
     
-    
     // MARK: List Subscribe
     private func subscribeList() {
         viewModel
@@ -97,8 +91,7 @@ final class HomeVC: BaseVC {
                         self.emptyListView.configrations(.searchEmpty)
                         self.tableView.backgroundView = self.emptyListView
                     } else {
-                        self.emptyListView.configrations(.searchError)
-                        self.tableView.backgroundView = self.emptyListView
+                        self.tableView.backgroundView = nil
                     }
                 }
             }, onError: { [weak self] error in
@@ -108,35 +101,40 @@ final class HomeVC: BaseVC {
                 }
             }).disposed(by: viewModel.disposeBag)
     }
-
-
-    
-    private func searchBarTextDidChange() {
-        // SearchBar'daki metni dinleyin ve RxSwift ile işleyin
-             searchBar.rx.text.orEmpty
-                 .distinctUntilChanged() // Tekrar eden değerleri filtrele
-                 .debounce(.milliseconds(800), scheduler: MainScheduler.instance) // Kullanıcının yazmayı bitirmesini bekleyin
-                 .subscribe(onNext: { [weak self] searchText in
-                     guard let self else { return }
-                     if searchText.count < 4 {
-                         viewModel.moviesList.accept([])
-                         tableView.reloadData()
-                     } else {
-                         self.viewModel.getMoviesByName(search: searchText)
-                     }
-                 })
-                 .disposed(by: viewModel.disposeBag)
-    }
 }
 
 
 // MARK: Serch Bar Delegate
 extension HomeVC: UISearchBarDelegate {
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-      
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            viewModel.moviesList.accept([])
         }
     }
+  
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self else { return }
+            if viewModel.moviesList.value.isEmpty && searchBar.text != "" {
+                self.emptyListView.configrations(.searchError)
+                self.tableView.backgroundView = self.emptyListView
+            }
+        }
+    }
+ 
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let searchedText: String = searchBar.text ?? ""
+        if searchedText.count < 4 {
+            viewModel.moviesList.accept([])
+            tableView.reloadData()
+        } else {
+            self.viewModel.getMoviesByName(search: searchedText)
+        }
+        self.view.endEditing(true)
+    }
+    
+}
 
 
 

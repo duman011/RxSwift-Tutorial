@@ -20,13 +20,14 @@ final class HomeViewModel:BaseViewModel {
         
         NetworkService.shared.search(with: search)
             .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
                 switch result {
                 case .success(let response):
                     let getUpcomingMovies = response.results.filter({$0.poster_path != nil})
-                    self?.moviesList.accept(getUpcomingMovies)
-                    self?.isLoad.accept(false)
+                    moviesList.accept(getUpcomingMovies)
+                    isLoad.accept(false)
                 case .failure(_):
-                    self?.isLoad.accept(false)
+                    isLoad.accept(false)
                 }
             }, onError: { [weak self] (error) in
                 self?.isLoad.accept(false)

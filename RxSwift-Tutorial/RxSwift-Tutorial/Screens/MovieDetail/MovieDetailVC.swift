@@ -14,7 +14,7 @@ final class MovieDetailVC: UIViewController {
     var movieDetailViewModel: MovieDetailViewModel?
     
     //MARK: - IBOutlet
-    @IBOutlet weak var movieImage: UIImageView!
+    @IBOutlet private weak var movieImage: UIImageView!
     
     //MARK: - Initializers
     func setInitializeVM(_ movieDetailViewModel: MovieDetailViewModel) {
@@ -34,7 +34,6 @@ final class MovieDetailVC: UIViewController {
         self.title = self.movieDetailViewModel?.movieData.original_title ?? "Film Detayları"
     }
 
-    
     // MARK: Set Data
     private func setData() {
         if let imageURL = movieDetailViewModel?.movieData.backdrop_path ?? movieDetailViewModel?.movieData.poster_path{

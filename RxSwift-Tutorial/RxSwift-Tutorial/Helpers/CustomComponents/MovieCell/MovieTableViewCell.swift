@@ -15,13 +15,13 @@ final class MovieTableViewCell: UITableViewCell {
     static let identifier = "MovieTableViewCell"
     
     //MARK: - IBOutlet
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var movieImage: UIImageView!
-    @IBOutlet weak var movieName: UILabel!
-    @IBOutlet weak var movieReleaseDate: UILabel!
-    @IBOutlet weak var imdbLabel: UILabel!
+    @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var movieImage: UIImageView!
+    @IBOutlet private weak var movieName: UILabel!
+    @IBOutlet private weak var movieReleaseDate: UILabel!
+    @IBOutlet private weak var imdbLabel: UILabel!
     
-  
+  // MARK: - Layout Subviews
     override func layoutSubviews() {
         super.layoutSubviews()
 
@@ -30,7 +30,7 @@ final class MovieTableViewCell: UITableViewCell {
         configureContainerView()
     }
 
-    
+    // MARK: - UI Configuration
     private func configureContainerView(){
         containerView.backgroundColor = .secondarySystemBackground
         containerView.layer.cornerRadius = 15

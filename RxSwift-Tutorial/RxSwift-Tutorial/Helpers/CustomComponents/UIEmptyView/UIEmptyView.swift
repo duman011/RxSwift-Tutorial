@@ -19,8 +19,8 @@ final class UIEmptyView: UIView {
     private var lottieAnimationView: LottieAnimationView!
     
     //MARK: - IBOutlet
-    @IBOutlet weak var animationView: UIView!
-    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet private weak var animationView: UIView!
+    @IBOutlet private weak var infoLabel: UILabel!
     
     
     //MARK: - Initializers
