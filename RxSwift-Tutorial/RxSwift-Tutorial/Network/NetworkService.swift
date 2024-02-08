@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol NetworkServiceInterface {
-    func search(with query: String) -> Observable<WsResult<MovieResponse>>
+    func search(with query: String) -> Observable<Result<MovieResponse, MovieError>>
 }
 
 final class NetworkService: NetworkServiceInterface {
@@ -39,32 +39,32 @@ final class NetworkService: NetworkServiceInterface {
         return urlComponents.string!
     }
     
-    func search(with query: String) -> Observable<WsResult<MovieResponse>> {
+    func search(with query: String) -> Observable<Result<MovieResponse, MovieError>> {
          return Observable.create { observer in
              let queries = ["api_key": Endpoint.searchMovie.apiKey, "query": query]
              let url = self.getURLComponent(path: Endpoint.searchMovie.path, queries: queries)
              
              self.manager.dataTask(with: URL(string: url)!) { data, response, error in
-                 if let error = error {
-                     observer.onNext(.failure(WsError(error.localizedDescription)))
+                 if error != nil {
+                     observer.onNext(.failure(MovieError.invalidUrl))
                      observer.onCompleted()
                      return
                  }
                  
                  guard let httpResponse = response as? HTTPURLResponse else {
-                     observer.onNext(.failure(WsError("Invalid response")))
+                     observer.onNext(.failure(MovieError.invalidResponse))
                      observer.onCompleted()
                      return
                  }
                  
                  guard (200..<300) ~= httpResponse.statusCode else {
-                     observer.onNext(.failure(WsError("Invalid status code: \(httpResponse.statusCode)")))
+                     observer.onNext(.failure(MovieError.invalidResponse))
                      observer.onCompleted()
                      return
                  }
                  
                  guard let data = data else {
-                     observer.onNext(.failure(WsError("Invalid data")))
+                     observer.onNext(.failure(MovieError.invalidData))
                      observer.onCompleted()
                      return
                  }
@@ -74,7 +74,7 @@ final class NetworkService: NetworkServiceInterface {
                      observer.onNext(.success(movieResponse))
                      observer.onCompleted()
                  } catch {
-                     observer.onNext(.failure(WsError(error.localizedDescription)))
+                     observer.onNext(.failure(MovieError.decodeError))
                      observer.onCompleted()
                  }
              }.resume()

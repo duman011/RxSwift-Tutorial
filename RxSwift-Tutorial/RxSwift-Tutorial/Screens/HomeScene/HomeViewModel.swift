@@ -19,15 +19,12 @@ final class HomeViewModel:BaseViewModel {
         moviesList.accept([])
         
         NetworkService.shared.search(with: search)
-            .subscribe(onNext: { [weak self] (result: WsResult<MovieResponse>) in
+            .subscribe(onNext: { [weak self] result in
                 switch result {
                 case .success(let response):
-                    let getUpcomingMovies = response.results
+                    let getUpcomingMovies = response.results.filter({$0.poster_path != nil})
                     self?.moviesList.accept(getUpcomingMovies)
                     self?.isLoad.accept(false)
-                    
-                    // Güncellenmiş moviesList değerini kontrol et
-                    print("2dönen response Count: \(self?.moviesList.value.count ?? 0)")
                 case .failure(_):
                     self?.isLoad.accept(false)
                 }

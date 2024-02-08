@@ -37,9 +37,8 @@ final class MovieDetailVC: UIViewController {
     
     // MARK: Set Data
     private func setData() {
-        if let urlString = self.movieDetailViewModel?.movieData.poster_path,
-           let url = URL(string: urlString) {
-            self.movieImage.kf.setImage(with: url)
+        if let imageURL = movieDetailViewModel?.movieData.backdrop_path ?? movieDetailViewModel?.movieData.poster_path{
+            self.movieImage.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/"+imageURL))
         }
     }
 }

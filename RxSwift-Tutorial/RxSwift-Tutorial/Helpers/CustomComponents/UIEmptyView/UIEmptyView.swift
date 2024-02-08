@@ -14,14 +14,12 @@ enum GIF: String {
 }
 
 final class UIEmptyView: UIView {
-
+    
     //MARK: - Variables
     private var lottieAnimationView: LottieAnimationView!
     
     //MARK: - IBOutlet
-    
     @IBOutlet weak var animationView: UIView!
-    
     @IBOutlet weak var infoLabel: UILabel!
     
     
@@ -33,9 +31,7 @@ final class UIEmptyView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.initalize()
         fatalError("init(coder:) has not been implemented")
-        
     }
     
     private func initalize() {
@@ -44,20 +40,31 @@ final class UIEmptyView: UIView {
                                                       options: nil)?[0] as? UIView {
             viewFromXib.frame = self.bounds
             self.addSubview(viewFromXib)
-    }
+        }
     }
 }
 
 extension UIEmptyView {
-    func configrations(_ name:GIF) {
-        if !self.animationView.subviews.isEmpty {
-            self.lottieAnimationView.removeFromSuperview()
+    func configrations(_ name: GIF) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            if !animationView.subviews.isEmpty {
+                lottieAnimationView.removeFromSuperview()
+            }
+            lottieAnimationView = .init(name: name.rawValue)
+            lottieAnimationView.frame = animationView.bounds
+            lottieAnimationView.contentMode = .scaleAspectFit
+            lottieAnimationView.loopMode = .loop
+            animationView.addSubview(lottieAnimationView)
+            lottieAnimationView.play()
+            
+            //change info label
+            if name == .searchEmpty {
+                infoLabel.text = "Lütfen bilgi almak istediğiniz film için arama yapınız!"
+            } else {
+                infoLabel.text = "Aradıgınız film bulunamadı!"
+            }
         }
-        self.lottieAnimationView = .init(name: name.rawValue)
-        self.lottieAnimationView.frame = self.animationView.bounds
-        self.lottieAnimationView.contentMode = .scaleAspectFit
-        self.lottieAnimationView.loopMode = .loop
-        self.animationView.addSubview(lottieAnimationView)
-        self.lottieAnimationView.play()
     }
 }
+

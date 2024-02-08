@@ -26,7 +26,7 @@
         <!--HomeVC-->
         <scene sceneID="ffK-Tq-AgX">
             <objects>
-                <viewController storyboardIdentifier="HomeVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DlT-3Q-6Pm" customClass="HomeVC" customModule="RxSwift_Tutorial" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeVC" title="HomeVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DlT-3Q-6Pm" customClass="HomeVC" customModule="RxSwift_Tutorial" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XKu-DJ-Vpo">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -34,17 +34,21 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PX3-hN-txn">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
-                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="y7d-IL-eiV">
+                                    <searchBar contentMode="redraw" placeholder="Film Arayın..." translatesAutoresizingMaskIntoConstraints="NO" id="y7d-IL-eiV">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="VJO-0p-Bpv"/>
                                         </constraints>
                                         <textInputTraits key="textInputTraits"/>
+                                        <scopeButtonTitles>
+                                            <string>Title</string>
+                                            <string>Title</string>
+                                        </scopeButtonTitles>
                                         <connections>
                                             <outlet property="delegate" destination="DlT-3Q-6Pm" id="qN4-Zh-eR3"/>
                                         </connections>
                                     </searchBar>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hkQ-w1-6fL">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hkQ-w1-6fL">
                                         <rect key="frame" x="0.0" y="45" width="393" height="714"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>

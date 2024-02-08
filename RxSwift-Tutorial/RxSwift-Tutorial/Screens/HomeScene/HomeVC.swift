@@ -24,28 +24,23 @@ final class HomeVC: BaseVC {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Home VC Açıldı")
+
         initialSetting()
-        setTitle()
         subscribeIsLoad()
         subscribeList()
         tableViewItemSelected()
         tableViewBind()
-    }
-    
-    // MARK: Set Title
-    private func setTitle() {
-        self.title = "Ana Sayfa"
-        self.searchBar.placeholder = "Film Arayın..."
+        searchBarTextDidChange()
+       
     }
     
     // MARK: Register Table View Cell
     private func initialSetting() {
-        self.tableView.register(UINib(nibName: MovieTableViewCell.identifier,
+        tableView.register(UINib(nibName: MovieTableViewCell.identifier,
                                       bundle: nil),
                                 forCellReuseIdentifier: MovieTableViewCell.identifier)
-        self.tableView.rowHeight = 150
-        self.searchBar.delegate = self
+        tableView.rowHeight = 150
+        searchBar.delegate = self
     }
     
     // MARK: Table View Bind
@@ -54,12 +49,11 @@ final class HomeVC: BaseVC {
         viewModel
             .moviesList
             .asObservable()
-            .bind(to: self.tableView
+            .bind(to: tableView
                 .rx
                 .items(cellIdentifier: MovieTableViewCell.identifier, cellType: MovieTableViewCell.self)){ (row, movieData, cell) in
                     cell.configureCell(with: movieData)
-                    
-                }.disposed(by: self.viewModel.disposeBag)
+                }.disposed(by: viewModel.disposeBag)
     }
     
     // MARK: Table View Item Selected
@@ -69,10 +63,11 @@ final class HomeVC: BaseVC {
             .rx
             .modelSelected(Movie.self)
             .subscribe(onNext: { [weak self] movieData in
+                guard let self else { return }
                 let vc:MovieDetailVC = .instantiate()
                 vc.setInitializeVM(MovieDetailViewModel(movieData: movieData))
-                self?.navigationController?.pushViewController(vc, animated: true)
-            }).disposed(by: self.viewModel.disposeBag)
+                navigationController?.pushViewController(vc, animated: true)
+            }).disposed(by: viewModel.disposeBag)
     }
     
     
@@ -96,29 +91,52 @@ final class HomeVC: BaseVC {
         viewModel
             .moviesList
             .subscribe(onNext: { [weak self] list in
-                if(list.isEmpty) {
-                    self?.emptyListView.configrations(.searchEmpty)
-                    self?.tableView.backgroundView = self?.emptyListView
-                } else {
-                    DispatchQueue.main.async {
-                        self?.tableView.backgroundView = nil
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    if list.isEmpty && self.searchBar.text == "" {
+                        self.emptyListView.configrations(.searchEmpty)
+                        self.tableView.backgroundView = self.emptyListView
+                    } else {
+                        self.emptyListView.configrations(.searchError)
+                        self.tableView.backgroundView = self.emptyListView
                     }
                 }
             }, onError: { [weak self] error in
-                self?.tableView.backgroundView = nil
-            }).disposed(by: self.viewModel.disposeBag)
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    self.tableView.backgroundView = nil
+                }
+            }).disposed(by: viewModel.disposeBag)
     }
+
+
     
+    private func searchBarTextDidChange() {
+        // SearchBar'daki metni dinleyin ve RxSwift ile işleyin
+             searchBar.rx.text.orEmpty
+                 .distinctUntilChanged() // Tekrar eden değerleri filtrele
+                 .debounce(.milliseconds(800), scheduler: MainScheduler.instance) // Kullanıcının yazmayı bitirmesini bekleyin
+                 .subscribe(onNext: { [weak self] searchText in
+                     guard let self else { return }
+                     if searchText.count < 4 {
+                         viewModel.moviesList.accept([])
+                         tableView.reloadData()
+                     } else {
+                         self.viewModel.getMoviesByName(search: searchText)
+                     }
+                 })
+                 .disposed(by: viewModel.disposeBag)
+    }
 }
 
 
 // MARK: Serch Bar Delegate
 extension HomeVC: UISearchBarDelegate {
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let searchedText: String = searchBar.text ?? ""
-        self.viewModel.getMoviesByName(search: searchedText)
-        self.view.endEditing(true)
+      
+        }
     }
-    
-}
+
+
+
