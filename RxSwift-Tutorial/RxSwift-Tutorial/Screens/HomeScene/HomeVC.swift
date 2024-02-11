@@ -81,6 +81,7 @@ final class HomeVC: BaseVC {
     }
     
     // MARK: List Subscribe
+    /// ViewModel' daki moviesList'e observe olur ve boş olması durumunda empy Viewı Degiştir
     private func subscribeList() {
         viewModel
             .moviesList
@@ -133,7 +134,6 @@ extension HomeVC: UISearchBarDelegate {
         }
         self.view.endEditing(true)
     }
-    
 }
 
 

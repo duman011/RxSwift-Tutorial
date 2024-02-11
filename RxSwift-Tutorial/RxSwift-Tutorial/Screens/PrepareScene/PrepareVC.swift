@@ -29,7 +29,7 @@ extension PrepareVC {
     
     private func prepareHomeVC() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let vc:HomeVC = .instantiate()
+            let vc:RegisterVC = .instantiate()
             let navVC = UINavigationController(rootViewController: vc)
             self.view.window?.rootViewController = navVC
         }

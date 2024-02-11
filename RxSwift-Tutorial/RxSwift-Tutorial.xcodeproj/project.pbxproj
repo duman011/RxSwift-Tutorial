@@ -35,6 +35,7 @@
 		83B8A0C52B741527000B7AB2 /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B8A0C42B741527000B7AB2 /* MovieDetailViewModel.swift */; };
 		83DE3E042B72D3A300C5CB83 /* UIEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DE3E032B72D3A300C5CB83 /* UIEmptyView.swift */; };
 		83DE3E062B72D3DA00C5CB83 /* UIEmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DE3E052B72D3DA00C5CB83 /* UIEmptyView.xib */; };
+		83F88A882B78FF8100DF02A7 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F88A872B78FF8100DF02A7 /* RegisterVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		83B8A0C42B741527000B7AB2 /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 		83DE3E032B72D3A300C5CB83 /* UIEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEmptyView.swift; sourceTree = "<group>"; };
 		83DE3E052B72D3DA00C5CB83 /* UIEmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UIEmptyView.xib; sourceTree = "<group>"; };
+		83F88A872B78FF8100DF02A7 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 		8346B9912B72B47F0021A40D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				83F88A842B78F5E000DF02A7 /* Auth */,
 				8346B9A32B72C4AD0021A40D /* Base */,
 				8346B99B2B72B6300021A40D /* PrepareScene */,
 				8346B9A02B72C30E0021A40D /* HomeScene */,
@@ -265,6 +268,30 @@
 			path = MovieDetail;
 			sourceTree = "<group>";
 		};
+		83F88A842B78F5E000DF02A7 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				83F88A862B78FB1000DF02A7 /* Register */,
+				83F88A852B78FB0D00DF02A7 /* Login */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		83F88A852B78FB0D00DF02A7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		83F88A862B78FB1000DF02A7 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				83F88A872B78FF8100DF02A7 /* RegisterVC.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -366,6 +393,7 @@
 				8346B99D2B72B63C0021A40D /* PrepareVC.swift in Sources */,
 				8346B99F2B72BF570021A40D /* UIViewController+Ext.swift in Sources */,
 				83B8A0C52B741527000B7AB2 /* MovieDetailViewModel.swift in Sources */,
+				83F88A882B78FF8100DF02A7 /* RegisterVC.swift in Sources */,
 				8341A71B2B73B9DC00E1CAAF /* Endpoint.swift in Sources */,
 				8346B97D2B72B2C60021A40D /* AppDelegate.swift in Sources */,
 			);
