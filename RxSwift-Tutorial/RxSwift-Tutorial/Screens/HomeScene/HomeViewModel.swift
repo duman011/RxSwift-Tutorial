@@ -34,5 +34,15 @@ final class HomeViewModel:BaseViewModel {
             })
             .disposed(by: disposeBag)
     }
+    
+    /// Kullanıcıyı sistemden çıkaran metot.
+    func logout(completion: @escaping () -> Void) {
+        FirebaseAuthManager.shared.signOut {
+            print("Logout ...")
+            completion()
+        } onError: { error in
+            print("Logout Error: \(error.localizedDescription)")
+        }
+    }
 
 }

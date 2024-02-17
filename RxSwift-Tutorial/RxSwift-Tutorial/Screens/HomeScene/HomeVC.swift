@@ -12,7 +12,7 @@ import RxCocoa
 
 final class HomeVC: BaseVC {
     //MARK: - Constants
-    let viewModel: HomeViewModel = HomeViewModel()
+    private let viewModel: HomeViewModel = HomeViewModel()
     
     //MARK: - Variables
     private let emptyListView: UIEmptyView = UIEmptyView()
@@ -20,16 +20,18 @@ final class HomeVC: BaseVC {
     //MARK: - IBOutlet
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        configureNavigationBar()
         initialSetting()
         subscribeIsLoad()
         tableViewItemSelected()
         subscribeList()
         tableViewBind()
+        subscribeLogoutButton()
     }
     
     // MARK: Register Table View Cell
@@ -38,6 +40,17 @@ final class HomeVC: BaseVC {
         tableView.rowHeight = 150
         searchBar.delegate = self
     }
+    
+    func configureNavigationBar() {
+       let titleLabel = UILabel()
+       titleLabel.text = "Movie Search"
+       
+       if let customFont = UIFont(name: "Agbalumo-Regular", size: 30) {
+           titleLabel.font = customFont
+           navigationItem.titleView = titleLabel
+           titleLabel.textColor = .label
+       }
+   }
     
     // MARK: Table View Bind
     /// ViewModel' daki movie listin degerine gore otomatik olarak cell yerlestirir.
@@ -77,7 +90,7 @@ final class HomeVC: BaseVC {
                 } else {
                     self.loadingState(false)
                 }
-            }.disposed(by: self.viewModel.disposeBag)
+            }.disposed(by: viewModel.disposeBag)
     }
     
     // MARK: List Subscribe
@@ -102,6 +115,19 @@ final class HomeVC: BaseVC {
                 }
             }).disposed(by: viewModel.disposeBag)
     }
+    
+    private func subscribeLogoutButton(){
+        logoutButton.rx.tap
+            .subscribe(onNext: {[weak self] in
+                guard let self else { return }
+                viewModel.logout{
+                    let loginVC: LoginVC = .instantiate()
+                    let nav = UINavigationController(rootViewController: loginVC)
+                    self.view.window?.rootViewController = nav
+                }
+            })
+            .disposed(by: viewModel.disposeBag)
+    }
 }
 
 
@@ -118,8 +144,8 @@ extension HomeVC: UISearchBarDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let self else { return }
             if viewModel.moviesList.value.isEmpty && searchBar.text != "" {
-                self.emptyListView.configrations(.searchError)
-                self.tableView.backgroundView = self.emptyListView
+                emptyListView.configrations(.searchError)
+                tableView.backgroundView = self.emptyListView
             }
         }
     }
@@ -130,9 +156,10 @@ extension HomeVC: UISearchBarDelegate {
             viewModel.moviesList.accept([])
             tableView.reloadData()
         } else {
-            self.viewModel.getMoviesByName(search: searchedText)
+            viewModel.getMoviesByName(search: searchedText)
         }
-        self.view.endEditing(true)
+        
+       view.endEditing(true)
     }
 }
 

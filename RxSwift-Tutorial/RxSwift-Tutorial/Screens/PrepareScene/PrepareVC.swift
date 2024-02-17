@@ -23,15 +23,25 @@ extension PrepareVC {
         if Reachability.isNetworkAvailable() {
             prepareHomeVC()
         } else {
-            showAlert(title: "Hata", message: "Lütfen internet bağlantınızı kontrol ediniz.", buttonTitle: "OK")
+            ExitAlert(title: "Hata", message: "Lütfen internet bağlantınızı kontrol ediniz.", buttonTitle: "OK")
         }
     }
     
     private func prepareHomeVC() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let vc:RegisterVC = .instantiate()
-            let navVC = UINavigationController(rootViewController: vc)
-            self.view.window?.rootViewController = navVC
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            // MARK: - kullanıcı sürekli giriş yapmaması için yapılan işlem kullanıcıyı hatırlama işlemi
+            if ApplicationVariables.currentUserID != nil {
+                let vc:HomeVC = .instantiate()
+                let homeNavVC = UINavigationController(rootViewController: vc)
+                self.view.window?.rootViewController = homeNavVC
+                self.view.window?.makeKeyAndVisible()
+            }else {
+                let vc:LoginVC = .instantiate()
+                let navVC = UINavigationController(rootViewController: vc)
+                navVC.modalTransitionStyle = .crossDissolve
+                navVC.modalPresentationStyle = .fullScreen
+                self.present(navVC, animated: true)
+            }
         }
     }
 }
