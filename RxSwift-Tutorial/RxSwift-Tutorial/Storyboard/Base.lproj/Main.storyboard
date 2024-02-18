@@ -441,6 +441,36 @@
             </objects>
             <point key="canvasLocation" x="2735.1145038167938" y="-35.211267605633807"/>
         </scene>
+        <!--FavoriteVC-->
+        <scene sceneID="GkM-5n-Ist">
+            <objects>
+                <viewController storyboardIdentifier="FavoriteVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3m2-Pz-8Wc" customClass="FavoriteVC" customModule="RxSwift_Tutorial" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CtP-87-LP5">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="sNk-N8-cgP">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="rAP-xK-7NC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sNk-N8-cgP" firstAttribute="bottom" secondItem="rAP-xK-7NC" secondAttribute="bottom" id="OUB-be-SM9"/>
+                            <constraint firstItem="sNk-N8-cgP" firstAttribute="top" secondItem="rAP-xK-7NC" secondAttribute="top" id="c48-bu-XA9"/>
+                            <constraint firstItem="rAP-xK-7NC" firstAttribute="trailing" secondItem="sNk-N8-cgP" secondAttribute="trailing" id="gF4-RF-WN4"/>
+                            <constraint firstItem="sNk-N8-cgP" firstAttribute="leading" secondItem="rAP-xK-7NC" secondAttribute="leading" id="gQB-je-1yh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="sNk-N8-cgP" id="xcw-lO-hNk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Tr-6N-Uex" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3696.9465648854962" y="-35.211267605633807"/>
+        </scene>
     </scenes>
     <resources>
         <image name="photo" catalog="system" width="128" height="93"/>
